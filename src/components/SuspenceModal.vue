@@ -1,11 +1,16 @@
 <template>
   <teleport to="#app">
-    <h2>Look, Ma! I'm a multiroot component!</h2>
+    <h2>Look, Ma! I'm suspence modal!</h2>
     <button @click="showModal = true">Open modal</button>
     <div class="teleport-modal" v-if="showModal">
       <div class="modal-message">
-        <h2>I'm a modal teleported to body!</h2>
-        <button @click="showModal = false">Close modal</button>
+      <Suspense>
+        <template #default>
+          <dnd-data />
+        </template>
+        <template #fallback>Loading...</template>
+      </Suspense>
+      <button @click="showModal = false">Close modal</button>
       </div>
     </div>
   </teleport>
@@ -13,15 +18,18 @@
 
 <script>
 import { ref } from '@vue/reactivity'
+import DndData from './DndData.vue'
 export default {
-  setup () {
+  components: {
+    DndData
+  },
+  setup (props) {
     const showModal = ref(false)
 
     return { showModal }
   }
 }
 </script>
-
 <style>
 .teleport-modal {
   position: absolute;
