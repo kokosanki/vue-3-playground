@@ -19,12 +19,19 @@
 <script>
 import { ref } from '@vue/reactivity'
 import DndData from './DndData.vue'
+import { watch } from '@vue/runtime-core'
 export default {
   components: {
     DndData
   },
   setup (props) {
     const showModal = ref(false)
+
+    watch(showModal, () => {
+      // The use of .value with ref
+      console.log('ShowModal: ', showModal)
+      console.log('ShowModal value: ', showModal.value)
+    })
 
     return { showModal }
   }
